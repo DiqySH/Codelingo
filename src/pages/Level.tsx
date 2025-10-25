@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { editor } from "monaco-editor";
 import useRealtimeValue from "@/hooks/database/use-realtime-value";
 import { LevelObject } from "@/types";
+import NotFound from "./NotFound";
 
 const Level = () => {
   const level = useLoaderData();
@@ -27,32 +28,28 @@ ${data?.defaultCode}
  14`);
   }, [data, level]);
 
-  return (
+  return isEmpty ? (
+    <NotFound />
+  ) : (
     <div className="w-full min-h-screen flex flex-col">
-      {isEmpty ? (
-        <p>Level Not Found</p>
-      ) : (
-        <>
-          <Editor
-            height="100%"
-            language="javascript"
-            theme="vs-dark"
-            value={code}
-            className="max-w-[800px] font-code min-h-[500px] max-h-[500px]"
-            onChange={
-              setCode as (
-                value: string | undefined,
-                ev: editor.IModelContentChangedEvent
-              ) => void
-            }
-          />
-          <Button className="w-fit" onClick={() => runCode(code)}>
-            Run code
-          </Button>
-          {(isCorrect && <span>Code is correct!</span>) || (
-            <span>Code is incorrect!</span>
-          )}
-        </>
+      <Editor
+        height="100%"
+        language="javascript"
+        theme="vs-dark"
+        value={code}
+        className="max-w-[800px] font-code min-h-[500px] max-h-[500px]"
+        onChange={
+          setCode as (
+            value: string | undefined,
+            ev: editor.IModelContentChangedEvent
+          ) => void
+        }
+      />
+      <Button className="w-fit" onClick={() => runCode(code)}>
+        Run code
+      </Button>
+      {(isCorrect && <span>Code is correct!</span>) || (
+        <span>Code is incorrect!</span>
       )}
     </div>
   );
