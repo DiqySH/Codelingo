@@ -4,6 +4,8 @@ import NotFound from "../pages/NotFound";
 import AuthLayout from "../layout/AuthLayout";
 import LoginPage from "@/pages/Login";
 import RegisterPage from "@/pages/Register";
+import LevelPage from "@/pages/Level";
+import LevelsPage from "@/pages/Levels";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +26,17 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <RegisterPage />,
+      },
+      {
+        path: "/levels",
+        element: <LevelsPage />,
+      },
+      {
+        path: "/levels/:level",
+        loader: ({ params }) => {
+          return params.level;
+        },
+        element: <LevelPage />,
       },
     ],
   },

@@ -5,6 +5,13 @@
   font-family: "Poppins", sans-serif;
 }
 
+.font-code {
+  font-family: "Geist Mono", monospace;
+  * {
+    font-family: "Geist Mono", monospace;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
