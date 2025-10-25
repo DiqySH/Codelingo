@@ -1,6 +1,6 @@
 import z from "zod";
 
-const loginSchema = z.object({
+export const loginSchema = z.object({
   email: z
     .string("Email can't be empty!")
     .min(1, "Email can't be empty!")
@@ -11,7 +11,7 @@ const loginSchema = z.object({
     .min(6, "Password should be at least 6 characters"),
 });
 
-const registerSchema = z
+export const registerSchema = z
   .object({
     email: z
       .string("Email can't be empty!")
@@ -27,5 +27,3 @@ const registerSchema = z
     error: "Password don't match",
     path: ["confirmPassword"],
   });
-
-export { loginSchema, registerSchema };

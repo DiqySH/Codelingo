@@ -6,37 +6,43 @@ import LoginPage from "@/pages/Login";
 import RegisterPage from "@/pages/Register";
 import LevelPage from "@/pages/Level";
 import LevelsPage from "@/pages/Levels";
+import ThemeLayout from "@/layout/ThemeLayout";
 
 const router = createBrowserRouter([
   {
-    path: "/*",
-    element: <NotFound />,
-  },
-  {
-    element: <AuthLayout />,
+    element: <ThemeLayout />,
     children: [
       {
-        path: "/",
-        element: <HomePage />,
+        path: "/*",
+        element: <NotFound />,
       },
       {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/register",
-        element: <RegisterPage />,
-      },
-      {
-        path: "/levels",
-        element: <LevelsPage />,
-      },
-      {
-        path: "/levels/:level",
-        loader: ({ params }) => {
-          return params.level;
-        },
-        element: <LevelPage />,
+        element: <AuthLayout />,
+        children: [
+          {
+            path: "/",
+            element: <HomePage />,
+          },
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/register",
+            element: <RegisterPage />,
+          },
+          {
+            path: "/levels",
+            element: <LevelsPage />,
+          },
+          {
+            path: "/levels/:level",
+            loader: ({ params }) => {
+              return params.level;
+            },
+            element: <LevelPage />,
+          },
+        ],
       },
     ],
   },
