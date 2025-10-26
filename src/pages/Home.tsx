@@ -8,8 +8,9 @@ const Home = () => {
   return (
     <div className="w-full min-h-screen flex justify-center items-center gap-4">
       <Button
-        variant="ghost"
+        variant="outline"
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        className="hover:cursor-pointer"
       >
         {theme === "dark" ? <Sun /> : <Moon />}
       </Button>
