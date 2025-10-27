@@ -7,6 +7,7 @@ import RegisterPage from "@/pages/Register";
 import LevelPage from "@/pages/Level";
 import LevelsPage from "@/pages/Levels";
 import ThemeLayout from "@/layout/ThemeLayout";
+import LevelsContextLayout from "@/layout/LevelLContextLayout";
 
 const router = createBrowserRouter([
   {
@@ -32,15 +33,20 @@ const router = createBrowserRouter([
             element: <RegisterPage />,
           },
           {
-            path: "/levels",
-            element: <LevelsPage />,
-          },
-          {
-            path: "/levels/:level",
-            loader: ({ params }) => {
-              return params.level;
-            },
-            element: <LevelPage />,
+            element: <LevelsContextLayout />,
+            children: [
+              {
+                path: "/levels",
+                element: <LevelsPage />,
+              },
+              {
+                path: "/levels/:level",
+                loader: ({ params }) => {
+                  return params.level;
+                },
+                element: <LevelPage />,
+              },
+            ],
           },
         ],
       },

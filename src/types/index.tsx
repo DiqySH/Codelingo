@@ -53,3 +53,13 @@ export type Level = {
   updatedAt: string;
   __v: number;
 };
+
+export type LevelsProviderProps = {
+  children: React.ReactNode;
+};
+
+export type LevelsProviderState = {
+  levels: Level[];
+  isLoading: boolean;
+  error: Error | null;
+};
