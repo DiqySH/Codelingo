@@ -46,6 +46,7 @@ export type ThemeProviderState = {
 };
 
 export type Level = {
+  levelIndex: string;
   _id: string;
   title: string;
   content: string;
@@ -54,7 +55,17 @@ export type Level = {
   __v: number;
 };
 
+export type UpdateLevel = {
+  levelIndex: string;
+  title: string;
+  content: string;
+};
+
 export type LevelsProviderProps = {
+  children: React.ReactNode;
+};
+
+export type AdminProviderProps = {
   children: React.ReactNode;
 };
 
@@ -62,4 +73,22 @@ export type LevelsProviderState = {
   levels: Level[];
   isLoading: boolean;
   error: Error | null;
+};
+
+export type SidebarItem = {
+  contents: {
+    icon: React.ReactNode;
+    text: string;
+    url: string;
+  }[];
+  accounts: {
+    icon: React.ReactNode;
+    text: string;
+    url: string;
+  }[];
+};
+
+export type AdminData = {
+  id: string;
+  email: string;
 };

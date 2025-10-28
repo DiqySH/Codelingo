@@ -2,7 +2,8 @@ import { useLevelsContext } from "@/components/LevelsProvider";
 import { withProtected } from "@/hooks/use-protected";
 
 const Levels = () => {
-  const { levels, isLoading } = useLevelsContext();
+  const { levels } = useLevelsContext();
+  console.log(levels);
   return (
     <div>
       {levels.map((level) => (

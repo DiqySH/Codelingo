@@ -8,6 +8,9 @@ import LevelPage from "@/pages/Level";
 import LevelsPage from "@/pages/Levels";
 import ThemeLayout from "@/layout/ThemeLayout";
 import LevelsContextLayout from "@/layout/LevelLContextLayout";
+import AdminLayout from "@/layout/AdminLayout";
+import LevelsDashboardPage from "@/pages/LevelsDashboard";
+import AdminsDashboardPage from "@/pages/AdminsDashboard";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +34,19 @@ const router = createBrowserRouter([
           {
             path: "/register",
             element: <RegisterPage />,
+          },
+          {
+            element: <AdminLayout />,
+            children: [
+              {
+                path: "/dashboard/levels",
+                element: <LevelsDashboardPage />,
+              },
+              {
+                path: "/dashboard/admins",
+                element: <AdminsDashboardPage />,
+              },
+            ],
           },
           {
             element: <LevelsContextLayout />,

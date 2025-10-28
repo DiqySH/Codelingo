@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Level } from "@/types";
+import { Level, UpdateLevel } from "@/types";
 import axios from "axios";
 
 export const useGetLevels = (apiUrl: string) => {
@@ -30,4 +30,17 @@ export const useGetLevels = (apiUrl: string) => {
   }, [apiUrl]);
 
   return { levels, isLoading, error };
+};
+
+export const updateLevel = async (
+  apiUrl: string,
+  id: number | string,
+  data: UpdateLevel
+) => {
+  try {
+    await axios.put(apiUrl + "/" + id, data);
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
