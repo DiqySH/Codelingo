@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { FieldError } from "./ui/field";
 import { useEffect, useState } from "react";
 import { createAdmin } from "@/hooks/database/mongo";
-import { useAdminsContext } from "./AdminsProvider";
+import { useAdminsContext } from "./provider/AdminsProvider";
 
 export const AddAdminForm = () => {
   const {

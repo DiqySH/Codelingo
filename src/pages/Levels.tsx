@@ -1,4 +1,4 @@
-import { useLevelsContext } from "@/components/LevelsProvider";
+import { useLevelsContext } from "@/components/provider/LevelsProvider";
 import { withProtected } from "@/hooks/use-protected";
 
 const Levels = () => {

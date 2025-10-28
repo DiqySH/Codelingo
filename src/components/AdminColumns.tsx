@@ -15,7 +15,7 @@ import {
 } from "./ui/dialog";
 import { useState } from "react";
 import { deleteAdmin } from "@/hooks/database/mongo";
-import { useAdminsContext } from "./AdminsProvider";
+import { useAdminsContext } from "./provider/AdminsProvider";
 
 export const columns: ColumnDef<AdminData>[] = [
   {

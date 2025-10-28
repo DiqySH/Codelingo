@@ -3,6 +3,7 @@ import { AdminProviderProps, AdminsProviderState } from "@/types";
 import { useGetAdmins } from "@/hooks/database/mongo";
 import { useUser } from "@/context/user";
 import { useNavigate } from "react-router";
+import Loading from "../Loading";
 
 const initialState: AdminsProviderState = {
   admins: [],
@@ -40,11 +41,12 @@ export const AdminsProvider = ({ children, ...props }: AdminProviderProps) => {
     } else {
       navigate("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [admins]);
 
   return (
     <AdminsProviderContext.Provider {...props} value={value}>
-      {isLoading ? <div>Loading...</div> : children}
+      {isLoading ? <Loading /> : children}
     </AdminsProviderContext.Provider>
   );
 };

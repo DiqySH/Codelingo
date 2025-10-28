@@ -1,4 +1,4 @@
-import { AdminsProvider } from "@/components/AdminsProvider";
+import { AdminsProvider } from "@/components/provider/AdminsProvider";
 import AppSidebar from "@/components/AppSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";

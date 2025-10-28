@@ -1,7 +1,7 @@
 import { auth } from "@/services/firebase";
 import { useEffect, useState, ReactNode } from "react";
 import { InitialUserState, useUser } from "./user";
-import { Spinner } from "@/components/ui/spinner";
+import Loading from "@/components/Loading";
 
 interface AuthStateChangeProviderProps {
   children: ReactNode;
@@ -34,7 +34,7 @@ const AuthStateChangeProvider = ({
   if (isLoading) {
     return (
       <main className="w-full min-h-screen grid place-items-center dark:bg-black">
-        <Spinner />
+        <Loading />
       </main>
     );
   }
