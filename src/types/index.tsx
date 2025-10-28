@@ -1,10 +1,13 @@
-import { loginSchema, registerSchema } from "@/schemas";
+import { adminSchema, loginSchema, registerSchema } from "@/schemas";
 import React from "react";
 import z from "zod";
+import { SetStateAction } from "react";
 
 export type LoginFormInputs = z.infer<typeof loginSchema>;
 
 export type RegisterFormInputs = z.infer<typeof registerSchema>;
+
+export type AdminFormInputs = z.infer<typeof adminSchema>;
 
 export type FirebaseValue =
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -89,6 +92,18 @@ export type SidebarItem = {
 };
 
 export type AdminData = {
-  id: string;
+  _id: string;
   email: string;
+};
+
+export type AdminsProviderState = {
+  admins: AdminData[];
+  isLoading: boolean;
+  error: Error | null;
+  reFetch: boolean;
+  setReFetch: React.Dispatch<SetStateAction<boolean>>;
+};
+
+export type AdminsProviderProps = {
+  children: React.ReactNode;
 };

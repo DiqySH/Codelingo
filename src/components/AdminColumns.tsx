@@ -1,47 +1,23 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { ArrowUpDown, MoreHorizontal, Pencil, Trash } from "lucide-react";
+/* eslint-disable react-hooks/rules-of-hooks */
+import { ArrowUpDown, Trash } from "lucide-react";
 import { AdminData } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "./ui/button";
-
-export const data: AdminData[] = [
-  {
-    id: "4543634sdaf34",
-    email: "margolang55@gmail.com",
-  },
-];
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
+} from "./ui/dialog";
+import { useState } from "react";
+import { deleteAdmin } from "@/hooks/database/mongo";
+import { useAdminsContext } from "./AdminsProvider";
 
 export const columns: ColumnDef<AdminData>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
   {
     accessorKey: "email",
     header: ({ column }) => {
@@ -55,43 +31,57 @@ export const columns: ColumnDef<AdminData>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => (
+      <div className="lowercase ml-3">{row.getValue("email")}</div>
+    ),
   },
   {
+    accessorKey: "Action",
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
       const admin = row.original;
+      const { reFetch, setReFetch } = useAdminsContext();
+      const [isLoading, setIsLoading] = useState<boolean>(false);
+      const [isOpen, setIsOpen] = useState<boolean>(false);
+      const handleDelete = async () => {
+        setIsLoading(true);
+        try {
+          await deleteAdmin(import.meta.env.VITE_MONGO_ADMINS, admin._id);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setIsLoading(false);
+          setIsOpen(false);
+          setReFetch(!reFetch);
+        }
+      };
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
+        <Dialog open={isLoading ? true : isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <Button variant={"destructive"}>
+              <Trash className="w-3.5! h-3.5!" />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() =>
-                console.log("Delete email and id", admin.email, admin.id)
-              }
-            >
-              <Trash className="w-1 h-1" />
-              <span>Delete</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() =>
-                console.log("Update email and id", admin.email, admin.id)
-              }
-            >
-              <Pencil className="w-1 h-1" />
-              <span>Edit</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[400px]">
+            <DialogHeader>
+              <DialogTitle>Are you sure?</DialogTitle>
+              <DialogDescription>
+                This email will permanently deleted
+              </DialogDescription>
+            </DialogHeader>
+
+            <DialogFooter className="mt-2">
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" disabled={isLoading} onClick={handleDelete}>
+                Delete
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       );
     },
   },

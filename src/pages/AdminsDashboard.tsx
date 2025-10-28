@@ -10,10 +10,7 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import {
-  data as dataAdmin,
-  columns as adminColumns,
-} from "@/components/AdminColumns";
+import { columns as adminColumns } from "@/components/AdminColumns";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,8 +23,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { withProtected } from "@/hooks/use-protected";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { AddAdminForm } from "@/components/AdminForm";
+import { useAdminsContext } from "@/components/AdminsProvider";
 
 const DataTable = () => {
+  const { admins } = useAdminsContext();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -37,7 +38,7 @@ const DataTable = () => {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data: dataAdmin,
+    data: admins,
     columns: adminColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -56,8 +57,11 @@ const DataTable = () => {
   });
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
+    <div className="w-full max-w-3xl">
+      <div className="pt-2">
+        <SidebarTrigger />
+      </div>
+      <div className="flex items-center py-4 w-full justify-between gap-2">
         <Input
           placeholder="Filter emails..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
@@ -66,6 +70,7 @@ const DataTable = () => {
           }
           className="max-w-sm"
         />
+        <AddAdminForm />
       </div>
       <div className="overflow-hidden rounded-md border">
         <Table>
@@ -147,7 +152,7 @@ const DataTable = () => {
 
 const AdminsDashboard = () => {
   return (
-    <div className="w-full min-h-screen px-4">
+    <div className="w-full min-h-screen px-4 flex justify-center">
       <DataTable />
     </div>
   );

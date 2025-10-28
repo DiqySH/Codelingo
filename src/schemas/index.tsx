@@ -27,3 +27,10 @@ export const registerSchema = z
     error: "Password don't match",
     path: ["confirmPassword"],
   });
+
+export const adminSchema = z.object({
+  email: z
+    .string("Email can't be empty!")
+    .min(1, "Email can't be empty!")
+    .pipe(z.email("Invalid email address!")),
+});
